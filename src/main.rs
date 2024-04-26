@@ -1,3 +1,7 @@
+mod graph;
+use crate::graph::*;
+
 fn main() {
-    println!("Hello, world!");
+    let graph = Graph::read("twitter_combined.txt");
+    println!("{:?}", graph.outedges);
 }
