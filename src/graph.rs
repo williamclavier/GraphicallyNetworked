@@ -1,4 +1,3 @@
-use rand::Rng;
 use std::fs::File;
 use std::io::prelude::*;
 use std::collections::HashMap;
@@ -9,7 +8,7 @@ pub type AdjacencyMap = HashMap<Vertex, Vec<Vertex>>;
 
 #[derive(Debug)]
 pub struct Graph {
-    n: usize, // vertex labels in {0,...,n-1}
+    pub n: usize, // vertex labels in {0,...,n-1}
     pub outedges: AdjacencyMap,
 }
 
@@ -19,13 +18,14 @@ impl Graph {
         let mut result: ListOfEdges = Vec::new();
         let file = File::open(path).expect("Could not open file");
         let buf_reader = std::io::BufReader::new(file).lines();
-        let n = 0;
+        let mut n = 0;
         for line in buf_reader {
             let line_str = line.expect("Error reading");
             let v: Vec<&str> = line_str.trim().split(' ').collect();
             let x = v[0].parse::<usize>().unwrap();
             let y = v[1].parse::<usize>().unwrap();
             result.push((x, y));
+            n += 1;
         }
         return Graph::create(n, &result);
     }
@@ -33,7 +33,7 @@ impl Graph {
     fn add_directed_edges(&mut self, edges: &ListOfEdges) {
         for (u, v) in edges {
             if self.outedges.contains_key(u) {
-                // vertex already added so we need to extend the list
+                // vertex already in hashmap so we need to append the vertex to the corresponding vector
                 let mut vertexes: Vec<Vertex> = self.outedges.get(u).expect("Could not find vertex").to_vec();
                 vertexes.push(*v);
                 self.outedges.insert(*u, vertexes);
@@ -44,7 +44,7 @@ impl Graph {
     }
 
     fn sort_graph_lists(&mut self) {
-        for (vert, lst) in self.outedges.iter_mut() {
+        for (_, lst) in self.outedges.iter_mut() {
             lst.sort();
         }
     }

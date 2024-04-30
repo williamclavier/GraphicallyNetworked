@@ -1,7 +1,11 @@
-mod graph;
 use crate::graph::*;
+use crate::algorithms::bfs::BFS;
+
+pub mod graph;
+pub mod algorithms;
 
 fn main() {
     let graph = Graph::read("twitter_combined.txt");
-    println!("{:?}", graph.outedges);
+    let _ = BFS::new(graph);
+    // println!("{:?}", graph.outedges);
 }
