@@ -6,6 +6,6 @@ pub mod algorithms;
 
 fn main() {
     let graph = Graph::read("twitter_combined.txt");
-    let _ = BFS::new(graph);
-    // println!("{:?}", graph.outedges);
+    let bfs = BFS::new(graph);
+    println!("{:?}", bfs.average_distance(5000));
 }
