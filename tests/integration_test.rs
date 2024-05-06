@@ -7,7 +7,7 @@ fn test_bfs() {
     let mut vec = Vec::new();
     vec.push((0, 1));
     vec.push((1, 2));
-    let mut graph = Graph::create(6, &vec);
+    let graph = Graph::create(&vec);
     let bfs = BFS::new(graph);
     let solution = bfs.dist_from_vertex(0);
     let answer = HashMap::from([
