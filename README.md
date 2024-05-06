@@ -1,6 +1,6 @@
 # Graphically Networked
 This is a project to analyze the network connectivity of users on Twitter from an anonymized data set of users. 
-[Full Report](https://github.com/williamclavier/GraphicalNetworked/blob/main/Final_Report.pdf)
+[Full Report](https://github.com/williamclavier/GraphicallyNetworked/blob/main/Final_Report.pdf)
 ## Installation
 ```bash
 git clone https://github.com/williamclavier/GraphicallyNetworked.git
