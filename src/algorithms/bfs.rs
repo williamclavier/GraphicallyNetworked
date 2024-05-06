@@ -13,6 +13,7 @@ impl BFS {
     pub fn new(graph: Graph) -> BFS {
         BFS{graph}
     }
+
     pub fn dist_from_vertex(&self, start: Vertex) -> HashMap<usize, usize> {
         let mut visited: HashMap<Vertex, bool> = HashMap::new();
         let mut queue = VecDeque::new();
@@ -40,7 +41,7 @@ impl BFS {
     pub fn average_distance(&self, sample_size: usize) -> f64 {
         let verts: Vec<_> = self.graph.outedges.keys().copied().collect();
         let total_pairs = sample_size * (self.graph.outedges.len() - 1);
-        let avg_distance: f64 = (0..sample_size)
+        let avg_distances: Vec<f64> = (0..sample_size)
             .into_par_iter()
             .map(|_| {
                 let mut rng = thread_rng();
@@ -49,9 +50,8 @@ impl BFS {
                 let total: usize = dists.values().sum();
                 total as f64 / total_pairs as f64
             })
-            .collect::<Vec<f64>>()
-            .iter()
-            .sum::<f64>();
+            .collect::<Vec<f64>>();
+        let avg_distance = avg_distances.iter().sum::<f64>();
 
         return avg_distance;
     }

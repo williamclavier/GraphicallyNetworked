@@ -27,3 +27,14 @@ fn test_bfs() {
     }
     assert_eq!(flag, true);
 }
+
+#[test]
+fn test_avg_dist() {
+    let mut vec = Vec::new();
+    vec.push((0, 1));
+    vec.push((1, 2));
+    let graph = Graph::create(&vec);
+    let bfs = BFS::new(graph);
+    let res = (bfs.average_distance(10_000) * 10.0).round() / 10.0;
+    assert_eq!(true, approx::abs_diff_eq!(2.0, res));
+}

@@ -9,7 +9,7 @@ pub type AdjacencyMap = HashMap<Vertex, Vec<Vertex>>;
 #[derive(Debug)]
 pub struct Graph {
     pub n: usize, // vertex labels in {0,...,n-1}
-    pub outedges: AdjacencyMap,
+    pub outedges: AdjacencyMap, // hashmap of edges
 }
 
 impl Graph {
@@ -31,19 +31,23 @@ impl Graph {
     }
 
     fn add_directed_edges(&mut self, edges: &ListOfEdges) {
+        // Iterates through all the edges from the data file and adds them to the hashmap
+        // the edges are added to the hashmap key as a vector of values
         for (u, v) in edges {
             if self.outedges.contains_key(u) {
                 // vertex already in hashmap so we need to append the vertex to the corresponding vector
-                let mut vertexes: Vec<Vertex> = self.outedges.get(u).expect("Could not find vertex").to_vec();
-                vertexes.push(*v);
-                self.outedges.insert(*u, vertexes);
+                let mut vertexes: Vec<Vertex> = self.outedges.get(u).expect("Could not find vertex").to_vec(); // get the existing vertexs from hashmap
+                vertexes.push(*v); // add the new vertex to the vector
+                self.outedges.insert(*u, vertexes); // add the new list of vertices to the hashmap over the existing one
             } else {
+                // vertex does not exist in hashmap so we need to add it to the hashmap with vector of just the one edge
                 self.outedges.insert(*u, vec![*v]);
             }
         }
     }
 
     fn sort_graph_lists(&mut self) {
+        // iterates through the hashmap to sort the vectors of edges in the values of the hashmap
         for (_, lst) in self.outedges.iter_mut() {
             lst.sort();
         }
